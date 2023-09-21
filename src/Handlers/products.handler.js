@@ -10,7 +10,7 @@ const {
 const allProducts = async (req, res) => {
   try {
     const { query } = req;
-    // console.log(query);
+    console.log(query);
     const result = await search(
       query.search_name,
       query.search_price,
@@ -21,6 +21,7 @@ const allProducts = async (req, res) => {
     console.log("hasil", result.rows[0].method_product);
     res.status(200).json({
       msg: "sukses",
+      read: read.rows,
       result: result.rows,
     });
   } catch (error) {
