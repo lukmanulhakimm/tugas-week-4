@@ -5,6 +5,7 @@ const {
   del,
   readById,
 } = require("../Models/users.model");
+const { param } = require("../Routers/categories.router");
 const allUsers = async (req, res) => {
   try {
     const result = await read();
@@ -70,7 +71,9 @@ const updateUsers = async (req, res) => {
 };
 const deleteUsers = async (req, res) => {
   try {
+    //  pr
     const { params } = req;
+    console.log("blajk", params);
     const result = await del(params.id);
     if (result.rows.length - 1)
       return res.status(404).json({ msg: "id  not found" });
