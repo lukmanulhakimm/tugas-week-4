@@ -80,7 +80,7 @@ const deleteUsers = async (req, res) => {
     });
   } catch (error) {
     if (error.code === "23503")
-      return res.status(403).json({ msg: "status di tolak " });
+      return res.status(403).json({ msg: "status di tolak ", error: error });
     res.status(500).json({
       msg: "internal server error",
     });
