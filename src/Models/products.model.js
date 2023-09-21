@@ -48,26 +48,20 @@ const del = (id) => {
   const values = [id];
   return db.query(sql, values);
 };
-
-const search = (name) => {
+const search = (search_name, search_price, orderByProduct, limit, page) => {
   const sql =
-    "select p.id, p.name_product,p.description,p.stock, p.price,p.size, p.created_at,categories.name_category, promos.name_promo ,promos.discount_percentage from products p join categories on p.id_category  = categories.id left join promos on p.id_promo = promos.id where name_product like $1";
-  const values = [`%${name}%`];
-  return db.query(sql, values);
-};
-// masih error
-const orderBy = (name, price, order_name, order_price, date) => {
-  const sql =
-    "select products.id,products.name_product,products.description,products.stock, products.price,products.method_product, products.created_at, categories.name_category,promos.name_promo,promos.discount_percentage from products join categories on products.id_category  = categories.id left join promos on products.id_promo = promos.id where name_product like $1 or price < $2 order by name_product $3 ,price $4, created_at $5 ;";
-  const values = [`%${name}%`, price, order_name, order_price, date];
+    "select products.id,products.name_product,products.description,products.stock, products.price,products method_product, products.created_at, categories.name_category,promos.name_promo,promos.discount_percentage from products join categories on products.id_category  = categories.id left join promos on products.id_promo = promos.id where name_product like $1 or  price < $2 order by name_product " +
+    orderByProduct +
+    ",price asc, created_at asc limit $3 offset $4 ";
+  const values = [`%${search_name}%`, search_price, limit, page];
   return db.query(sql, values);
 };
 
-const page = (limit, page) => {
-  const sql =
-    "select products.id,products.name_product,products.description,products.stock, products.price,products.method_product, products.created_at, categories.name_category,promos.name_promo,discount_percentage from products join categories on products.id_category  = categories.id left join promos on products.id_promo = promos.id order by id asc limit $1 offset $2 ";
-  const values = [limit, page];
-  return db.query(sql, values);
+module.exports = {
+  read,
+  create,
+  update,
+  del,
+  readById,
+  search,
 };
-
-module.exports = { read, create, update, del, search, orderBy, page, readById };

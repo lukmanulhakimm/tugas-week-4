@@ -3,22 +3,31 @@ const {
   create,
   update,
   del,
-  search,
-  orderBy,
-  page,
   readById,
+  search,
 } = require("../Models/products.model");
 
 const allProducts = async (req, res) => {
   try {
-    const result = await read();
+    const { query } = req;
+    // console.log(query);
+    const result = await search(
+      query.search_name,
+      query.search_price,
+      query.orderByProduct,
+      query.limit,
+      query.page
+    );
+    console.log("hasil", result.rows[0].method_product);
     res.status(200).json({
       msg: "sukses",
       result: result.rows,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       msg: "internal server error",
+      mesh: error,
     });
   }
 };
@@ -39,6 +48,7 @@ const createProducts = async (req, res) => {
       msg: "products baru sukses",
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       msg: "internal server error",
     });
@@ -48,7 +58,6 @@ const updateProducts = async (req, res) => {
   try {
     const { body, params } = req;
     const toUpdate = await readById(params.id);
-    console.log("isinya", toUpdate);
     if (toUpdate.rows.length - 1)
       res.status(404).json({ msg: "data not found" });
     let rows = toUpdate.rows[0];
@@ -84,71 +93,8 @@ const deleteProducts = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    if (error.code === "23503")
-      return res.status(403).json({ msg: "delete di tolak " });
     res.status(500).json({
-      msg: "internal server error",
-    });
-  }
-};
-const searchProducts = async (req, res) => {
-  try {
-    const { query } = req;
-
-    const result = await search(query.name);
-    if (result.rows.length === 0)
-      return res.status(404).json({
-        msg: " data tidak ditemukan",
-      });
-    res.status(200).json({
-      msg: "sukses",
-      result: result.rows,
-    });
-  } catch (error) {
-    res.status(500).json({
-      msg: "internal server error",
-    });
-  }
-};
-
-const orderByProducts = async (req, res) => {
-  try {
-    const { query } = req;
-
-    const result = await orderBy(
-      query.name,
-      query.price,
-      query.order_name,
-      query.order_price,
-      query.date
-    );
-    if (result.rows.length === 0)
-      return res.status(404).json({
-        msg: " data tidak ditemukan",
-      });
-    res.status(200).json({
-      msg: " sukses menampilkan data",
-      result: result.rows,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      msg: "internal server error",
-    });
-  }
-};
-const paginationProducts = async (req, res) => {
-  try {
-    const { query } = req;
-
-    const result = await page(query.limit, query.page);
-    res.status(200).json({
-      msg: " sukses menampilkan data",
-      result: result.rows,
-    });
-  } catch (error) {
-    res.status(500).json({
-      msg: "internal server error",
+      msg: 'delete on table "products" violates foreign key constraint "fk_product_image" on table "images"',
     });
   }
 };
@@ -158,7 +104,4 @@ module.exports = {
   createProducts,
   updateProducts,
   deleteProducts,
-  searchProducts,
-  orderByProducts,
-  paginationProducts,
 };
