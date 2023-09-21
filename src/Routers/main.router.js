@@ -9,6 +9,7 @@ const promosRouter = require("./promos.router");
 const ordersRouter = require("./orders.router");
 const usersRouter = require("./users.router");
 const orderDetailRouter = require("./orderDetail.router");
+const authRouter = require("./auth.router");
 
 mainRouter.use("/categories", categoriesRouter);
 mainRouter.use("/products", productsRouter);
@@ -17,5 +18,6 @@ mainRouter.use("/promos", promosRouter);
 mainRouter.use("/orders", ordersRouter);
 mainRouter.use("/users", usersRouter);
 mainRouter.use("/order-detail", orderDetailRouter);
+mainRouter.use("/auth", authRouter);
 
 module.exports = mainRouter;
