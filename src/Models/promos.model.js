@@ -11,10 +11,17 @@ const create = (name_promo, discount_percentage, start_date, end_date) => {
   const values = [name_promo, discount_percentage, start_date, end_date];
   return db.query(sql, values);
 };
+const readById = (id) => {
+  const sql =
+    "select name_promo, discount_percentage, start_date, end_date from promos where id=$1";
+  const values = [id];
+  return db.query(sql, values);
+};
 
-const update = (discount_percentage, id) => {
-  const sql = "update promos set discount_percentage= $1 where id =$2 ";
-  const values = [discount_percentage, id];
+const update = (name_promo, discount_percentage, start_date, end_date, id) => {
+  const sql =
+    "update promos set name_promo = $1, discount_percentage= $2, start_date = $3, end_date = $4  where id =$5  ";
+  const values = [name_promo, discount_percentage, start_date, end_date, id];
   return db.query(sql, values);
 };
 const del = (id) => {
@@ -23,4 +30,4 @@ const del = (id) => {
   db.query(sql, values);
 };
 
-module.exports = { read, create, update, del };
+module.exports = { read, create, update, del, readById };

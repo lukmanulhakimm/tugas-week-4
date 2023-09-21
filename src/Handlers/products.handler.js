@@ -93,9 +93,10 @@ const deleteProducts = async (req, res) => {
       msg: `product dengan id ${params.id} berhasil dihapus`,
     });
   } catch (error) {
-    console.log(error);
+    if (error.code === "23503")
+      return res.status(403).json({ msg: "status di tolak " });
     res.status(500).json({
-      msg: 'delete on table "products" violates foreign key constraint "fk_product_image" on table "images"',
+      msg: "internal server error",
     });
   }
 };
