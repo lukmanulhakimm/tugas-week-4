@@ -8,7 +8,10 @@ const register = async (req, res) => {
     await createUser(body.userName, hashedPassword, body.email, body.no_phone);
     return res.status(201).json({
       msg: "register berhasil ",
-      data: { userName, email },
+      data: {
+        userName: body.userName,
+        email: body.email,
+      },
     });
   } catch (error) {
     console.log("blablaba", error);
@@ -17,6 +20,7 @@ const register = async (req, res) => {
         msg: "email sudah terdaftar",
         result: error,
       });
+    console.log(error);
     res.status(500).json({
       //  status error tetapi data postman masuk ke db
       msg: "internal server error",
