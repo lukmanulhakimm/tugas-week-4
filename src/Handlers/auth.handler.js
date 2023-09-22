@@ -22,7 +22,6 @@ const register = async (req, res) => {
       });
     console.log(error);
     res.status(500).json({
-      //  status error tetapi data postman masuk ke db
       msg: "internal server error",
       result: error,
     });
