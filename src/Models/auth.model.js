@@ -5,5 +5,11 @@ const createUser = (userName, password, email, no_phone) => {
   const VALUES = [userName, password, email, no_phone];
   return db.query(sql, VALUES);
 };
+const getUserPassword = (email) => {
+  const sql =
+    "select password, full_name, user_role  from users where email= $1 ";
+  const VALUES = [email];
+  return db.query(sql, VALUES);
+};
 
-module.exports = { createUser };
+module.exports = { createUser, getUserPassword };

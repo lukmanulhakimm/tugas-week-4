@@ -1,5 +1,7 @@
 const argon = require("argon2");
-const { createUser } = require("../Models/auth.model");
+const jwt = require("jsonwebtoken");
+const { createUser, getUserPassword } = require("../Models/auth.model");
+const { jwtKey, issuer } = require("../Configs/environments");
 
 const register = async (req, res) => {
   try {
@@ -14,13 +16,11 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log("blablaba", error);
     if (error.code === "23505")
-      return res.status(400).json({
-        msg: "email sudah terdaftar",
-        result: error,
-      });
-    console.log(error);
+      if (error.detail.includes("email"))
+        return res.status(400).json({ msg: "email sudah terdaftar" });
+    if (error.detail.includes("no_phone"))
+      return res.status(400).json({ msg: "no phone sudah terdaftar" });
     res.status(500).json({
       msg: "internal server error",
       result: error,
@@ -28,4 +28,46 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { register };
+const login = async (req, res) => {
+  try {
+    const {
+      body: { email, clientPassword },
+    } = req;
+    const result = await getUserPassword(email);
+    // console.log("contoh", result.rows[0]);
+    if (!result.rows.length)
+      return res.status(400).json({ msg: "email not registered" });
+    const { password, full_name, user_role } = result.rows[0];
+    const isValid = await argon.verify(password, clientPassword);
+    if (!isValid)
+      return res.status(401).json({ msg: "password does not match" });
+    const payLoad = {
+      full_name,
+      email,
+      user_role,
+    };
+    jwt.sign(
+      payLoad,
+      jwtKey,
+      {
+        expiresIn: "5m",
+        issuer,
+      },
+      (error, token) => {
+        if (error) throw error;
+        res.status(200).json({
+          msg: `selamat datang ${full_name}`,
+          data: {
+            token,
+            userInfo: { email, full_name },
+          },
+        });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "internal server error" });
+  }
+};
+
+module.exports = { register, login };
