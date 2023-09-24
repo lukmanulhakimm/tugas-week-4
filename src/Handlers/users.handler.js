@@ -50,12 +50,14 @@ const updateUsers = async (req, res) => {
     if (body.email) rows.email = body.email;
     if (body.password) rows.password = body.password;
     if (body.address) rows.address = body.address;
+    if (body.user_role) rows.user_role = body.user_role;
 
     await update(
       rows.full_name,
       rows.email,
       rows.password,
       rows.address,
+      rows.user_role,
       params.id
     );
 

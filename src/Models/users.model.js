@@ -19,10 +19,10 @@ const readById = (id) => {
   const values = [id];
   return db.query(sql, values);
 };
-const update = (full_name, email, password, address, id) => {
+const update = (full_name, email, password, address, user_role, id) => {
   const sql =
-    "update users set full_name=$1, email=$2, password=$3, address =$4 where id = $5";
-  const values = [full_name, email, password, address, id];
+    "update users set full_name=$1, email=$2, password=$3, address =$4, user_role=$5 where id = $6";
+  const values = [full_name, email, password, address, user_role, id];
   return db.query(sql, values);
 };
 

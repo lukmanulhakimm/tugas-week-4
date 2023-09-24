@@ -14,11 +14,11 @@ const authRouter = require("./auth.router");
 const { isLogin, isAdmin, isUser } = require("../Middlewares/authorization");
 
 mainRouter.use("/categories", categoriesRouter);
-mainRouter.use("/products", isLogin, isAdmin, productsRouter);
-mainRouter.use("/images", isLogin, isUser, imagesRouter);
+mainRouter.use("/products", isLogin, productsRouter);
+mainRouter.use("/images", isLogin, imagesRouter);
 mainRouter.use("/promos", isLogin, promosRouter);
-mainRouter.use("/orders", ordersRouter);
-mainRouter.use("/users", usersRouter);
+mainRouter.use("/orders", isLogin, ordersRouter);
+mainRouter.use("/users", isLogin, isAdmin, usersRouter);
 mainRouter.use("/order-detail", orderDetailRouter);
 mainRouter.use("/auth", authRouter);
 

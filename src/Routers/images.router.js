@@ -7,10 +7,11 @@ const {
   updateImages,
   deleteImages,
 } = require("../Handlers/images.handler");
+const { isAdmin } = require("../Middlewares/authorization");
 
 imagesRouter.get("/", allImages);
-imagesRouter.post("/:id_product", createImages);
-imagesRouter.patch("/:id/:id_product", updateImages);
-imagesRouter.delete("/:id", deleteImages);
+imagesRouter.post("/:id_product", isAdmin, createImages);
+imagesRouter.patch("/:id/:id_product", isAdmin, updateImages);
+imagesRouter.delete("/:id", isAdmin, deleteImages);
 
 module.exports = imagesRouter;

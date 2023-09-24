@@ -20,10 +20,11 @@ const update = (name_category, id) => {
 
 const del = (id) => {
   const timeStamp = moment().format("YYYY-MM-DD H:mm:ss");
-  console.log(timeStamp);
+  // console.log(timeStamp);
   const sql =
-    "update categories  set deleted_at='" + timeStamp + "' where id=" + id;
-  console.log(sql);
-  return db.query(sql);
+    "update categories  set deleted_at='" + timeStamp + "' where id= $1";
+  const values = [id];
+  // console.log(sql);
+  return db.query(sql, values);
 };
 module.exports = { read, create, update, del };

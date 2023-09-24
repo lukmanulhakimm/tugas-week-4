@@ -7,7 +7,13 @@ const register = async (req, res) => {
   try {
     const { body } = req;
     const hashedPassword = await argon.hash(body.password);
-    await createUser(body.userName, hashedPassword, body.email, body.no_phone);
+    await createUser(
+      body.userName,
+      hashedPassword,
+      body.email,
+      body.no_phone,
+      body.address
+    );
     return res.status(201).json({
       msg: "register berhasil ",
       data: {
