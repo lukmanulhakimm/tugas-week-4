@@ -58,7 +58,13 @@ const search = (search_name, search_price, orderByProduct, limit, page) => {
   return db.query(sql, values);
 };
 
+const getTotalData = () => {
+  const sql = "select count(*) as total_product from products";
+  return db.query(sql);
+};
+
 module.exports = {
+  getTotalData,
   read,
   create,
   update,

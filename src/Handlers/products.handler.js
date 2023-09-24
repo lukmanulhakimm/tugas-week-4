@@ -5,6 +5,7 @@ const {
   del,
   readById,
   search,
+  getTotalData,
 } = require("../Models/products.model");
 
 const allProducts = async (req, res) => {
@@ -15,13 +16,18 @@ const allProducts = async (req, res) => {
       query.search_name,
       query.search_price,
       query.orderByProduct,
-      query.limit,
-      query.page
+      query.per_page,
+      query.page - 1
     );
+    const totalData = await getTotalData();
     res.status(200).json({
       msg: "sukses",
-      read: read.rows,
-      result: result.rows,
+      data: result.rows,
+      pagination: {
+        page: parseInt(query.page),
+        total_show: parseInt(result.rows.length),
+        total_data: parseInt(totalData.rows[0].total_product),
+      },
     });
   } catch (error) {
     console.log(error);
@@ -31,6 +37,7 @@ const allProducts = async (req, res) => {
     });
   }
 };
+
 const createProducts = async (req, res) => {
   try {
     const { body } = req;
