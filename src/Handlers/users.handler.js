@@ -73,11 +73,13 @@ const deleteUsers = async (req, res) => {
   try {
     //  pr
     const { params } = req;
-    console.log("blajk", params);
+    // console.log("blajk", params);
     const result = await del(params.id);
-    if (result.rows.length - 1)
+
+    if (!result.rowCount) {
       return res.status(404).json({ msg: "id  not found" });
-    res.status(200).json({
+    }
+    return res.status(200).json({
       msg: `users dengan id ${params.id} sudah terhapus`,
       result,
     });

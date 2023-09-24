@@ -50,7 +50,7 @@ const login = async (req, res) => {
       payLoad,
       jwtKey,
       {
-        expiresIn: "5m",
+        expiresIn: "1d",
         issuer,
       },
       (error, token) => {

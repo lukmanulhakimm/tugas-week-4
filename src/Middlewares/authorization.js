@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+
 const { jwtKey, issuer } = require("../Configs/environments");
 
 const isLogin = (req, res, next) => {
@@ -16,12 +17,26 @@ const isLogin = (req, res, next) => {
           return res.status(401).json({
             msg: "your access not started yet",
           });
+        default:
+          return res.status(401).json({ msg: "Invalid Token" });
       }
     }
     req.userInfo = data;
     next();
   });
 };
-const isRole = () => {};
+const isAdmin = (req, res, next) => {
+  if (req.userInfo.user_role !== "admin") {
+    return res.status(403).json({ msg: "You don't have access to this route" });
+  }
+  next();
+};
 
-module.exports = { isLogin, isRole };
+const isUser = (req, res, next) => {
+  if (req.userInfo.user_role !== "user") {
+    return res.status(403).json({ msg: "You don't have access to this route" });
+  }
+  next();
+};
+
+module.exports = { isLogin, isAdmin, isUser };

@@ -11,12 +11,12 @@ const usersRouter = require("./users.router");
 const orderDetailRouter = require("./orderDetail.router");
 const authRouter = require("./auth.router");
 
-const { isLogin } = require("../Middlewares/authorization");
+const { isLogin, isAdmin, isUser } = require("../Middlewares/authorization");
 
 mainRouter.use("/categories", categoriesRouter);
-mainRouter.use("/products", isLogin, productsRouter);
-mainRouter.use("/images", imagesRouter);
-mainRouter.use("/promos", promosRouter);
+mainRouter.use("/products", isLogin, isAdmin, productsRouter);
+mainRouter.use("/images", isLogin, isUser, imagesRouter);
+mainRouter.use("/promos", isLogin, promosRouter);
 mainRouter.use("/orders", ordersRouter);
 mainRouter.use("/users", usersRouter);
 mainRouter.use("/order-detail", orderDetailRouter);
