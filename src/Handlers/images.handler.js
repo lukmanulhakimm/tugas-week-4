@@ -1,4 +1,5 @@
 const { read, create, update, del } = require("../Models/images.model");
+const { singleUpload } = require("../Middlewares/diskUpload");
 const allImages = async (req, res) => {
   try {
     const result = await read();
@@ -16,7 +17,6 @@ const allImages = async (req, res) => {
 const createImages = async (req, res) => {
   try {
     const { body, params } = req;
-
     await create(body.image, params.id_product);
     res.status(200).json({
       msg: "image baru sudah ditambahkan sukses",

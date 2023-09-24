@@ -17,7 +17,7 @@ const allProducts = async (req, res) => {
       query.search_price,
       query.orderByProduct,
       query.per_page,
-      query.page - 1
+      query.page
     );
     const totalData = await getTotalData();
     res.status(200).json({

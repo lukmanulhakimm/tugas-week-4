@@ -12,6 +12,12 @@ const orderDetailRouter = require("./orderDetail.router");
 const authRouter = require("./auth.router");
 
 const { isLogin, isAdmin, isUser } = require("../Middlewares/authorization");
+const { singleUpload } = require("../Middlewares/diskUpload");
+
+mainRouter.post("/upload", singleUpload("image"), (req, res) => {
+  console.log(req.file);
+  res.status(200).json({ msg: "okk  " });
+});
 
 mainRouter.use("/categories", categoriesRouter);
 mainRouter.use("/products", isLogin, productsRouter);

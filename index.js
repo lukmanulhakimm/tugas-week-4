@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const server = express();
 
+server.use(express.static("./public"));
 // pasang parser untuk json dan form url encoded
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
