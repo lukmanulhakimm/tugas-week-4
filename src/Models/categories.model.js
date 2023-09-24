@@ -1,8 +1,8 @@
 // import db
 const db = require("../Configs/posgres");
-
+const moment = require("moment");
 const read = () => {
-  const sql = "select * from categories";
+  const sql = "select * from categories where deleted_at is null";
   return db.query(sql);
 };
 const create = (name_category) => {
@@ -19,8 +19,11 @@ const update = (name_category, id) => {
 };
 
 const del = (id) => {
-  const sql = "delete from categories where id =$1";
-  const values = [id];
-  return db.query(sql, values);
+  const timeStamp = moment().format("YYYY-MM-DD H:mm:ss");
+  console.log(timeStamp);
+  const sql =
+    "update categories  set deleted_at='" + timeStamp + "' where id=" + id;
+  console.log(sql);
+  return db.query(sql);
 };
 module.exports = { read, create, update, del };

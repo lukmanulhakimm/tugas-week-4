@@ -38,9 +38,10 @@ const updateCategory = async (req, res) => {
 
     await update(body.name_category, params.id);
     res.status(200).json({
-      msg: `nama category untuk id ${params.id} berubah menjadi ${body.name_category}`,
+      msg: `name_category untuk id ${params.id} berubah menjadi ${body.name_category}`,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       msg: "internal server error",
     });
@@ -50,13 +51,12 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
   try {
     const { params } = req;
-
-    const data = await del(params.id);
+    await del(params.id);
     res.status(200).json({
       msg: `category dengan id ${params.id} berhasil dihapus`,
-      result: data.rows,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       msg: "internal server error",
     });

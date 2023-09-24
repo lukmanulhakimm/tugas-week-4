@@ -4,7 +4,7 @@ const { jwtKey, issuer } = require("../Configs/environments");
 
 const isLogin = (req, res, next) => {
   const bearerToken = req.header("Authorization");
-  if (!bearerToken) return res.status(401).json({ msg: "silahkan login " });
+  if (!bearerToken) return res.status(401).json({ msg: "please login " });
   const token = bearerToken.split(" ")[1];
   jwt.verify(token, jwtKey, { issuer }, (error, data) => {
     if (error) {
@@ -39,4 +39,6 @@ const isUser = (req, res, next) => {
   next();
 };
 
-module.exports = { isLogin, isAdmin, isUser };
+const isLogout = (req, res) => {};
+
+module.exports = { isLogin, isAdmin, isUser, isLogout };
