@@ -1,5 +1,4 @@
 const { read, create, update, del } = require("../Models/images.model");
-const { singleUpload } = require("../Middlewares/diskUpload");
 const allImages = async (req, res) => {
   try {
     const result = await read();

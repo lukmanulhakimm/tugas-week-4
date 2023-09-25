@@ -1,11 +1,30 @@
 const jwt = require("jsonwebtoken");
 
 const { jwtKey, issuer } = require("../Configs/environments");
+const { getLogout } = require("../Models/auth.model");
 
-const isLogin = (req, res, next) => {
+const isLogin = async (req, res, next) => {
   const bearerToken = req.header("Authorization");
+
   if (!bearerToken) return res.status(401).json({ msg: "please login " });
   const token = bearerToken.split(" ")[1];
+  req.tokenNew = token;
+  // cek apakah sudah logout
+  try {
+    const logout = await getLogout(token);
+    // apakah rowCount > 0
+
+    if (logout.rowCount > 0) {
+      // jika lebih dari 0 maka return token sudah tidak valid
+      return res.status(401).json({ msg: "token tidak valid " });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  // getogoutTOken(token) => select * from logout_tokens where token= token
+  // apablila ada tokennya, berarti dia sudah logout
+  // langsung return, token not valid;
+
   jwt.verify(token, jwtKey, { issuer }, (error, data) => {
     if (error) {
       switch (error.name) {
@@ -39,6 +58,4 @@ const isUser = (req, res, next) => {
   next();
 };
 
-const isLogout = (req, res) => {};
-
-module.exports = { isLogin, isAdmin, isUser, isLogout };
+module.exports = { isLogin, isAdmin, isUser };

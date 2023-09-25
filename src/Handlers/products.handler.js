@@ -11,7 +11,7 @@ const {
 const allProducts = async (req, res) => {
   try {
     const { query } = req;
-    // console.log(query);
+    console.log(query);
     const result = await search(
       query.search_name,
       query.search_price,

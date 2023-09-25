@@ -8,6 +8,7 @@ const {
   deleteImages,
 } = require("../Handlers/images.handler");
 const { isAdmin } = require("../Middlewares/authorization");
+const { singleUpload } = require("../Middlewares/diskUpload");
 
 imagesRouter.get("/", allImages);
 imagesRouter.post("/:id_product", isAdmin, createImages);

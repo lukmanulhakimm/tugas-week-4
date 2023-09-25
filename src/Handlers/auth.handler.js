@@ -1,6 +1,10 @@
 const argon = require("argon2");
 const jwt = require("jsonwebtoken");
-const { createUser, getUserPassword } = require("../Models/auth.model");
+const {
+  createUser,
+  getUserPassword,
+  insertLogout,
+} = require("../Models/auth.model");
 const { jwtKey, issuer } = require("../Configs/environments");
 
 const register = async (req, res) => {
@@ -45,8 +49,7 @@ const login = async (req, res) => {
       return res.status(400).json({ msg: "email not registered" });
     const { password, full_name, user_role } = result.rows[0];
     const isValid = await argon.verify(password, clientPassword);
-    if (!isValid)
-      return res.status(401).json({ msg: "password does not match" });
+    if (!isValid) return res.status(401).json({ msg: "password wrong" });
     const payLoad = {
       full_name,
       email,
@@ -76,4 +79,19 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const logout = async (req, res) => {
+  try {
+    const token = req.tokenNew;
+    const result = await insertLogout(token);
+    res.status(200).json({ msg: "logout berhasil" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "internal server error" });
+  }
+};
+// logout
+// insert into logout  values token= token
+// return logout berahasil
+//
+
+module.exports = { register, login, logout };

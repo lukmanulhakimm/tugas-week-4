@@ -6,6 +6,12 @@ const read = () => {
   return db.query(sql);
 };
 
+const readById = (id) => {
+  const sql = "select * from images where id=$1";
+  const values = [id];
+  return db.query(sql, values);
+};
+
 const create = (image, id_product) => {
   const sql = "insert into images(image,id_product) values($1,$2)";
   const values = [image, id_product];
@@ -24,4 +30,4 @@ const del = (id) => {
   return db.query(sql, values);
 };
 
-module.exports = { read, create, update, del };
+module.exports = { read, create, update, del, readById };

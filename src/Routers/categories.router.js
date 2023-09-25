@@ -6,12 +6,13 @@ const {
   updateCategory,
   deleteCategory,
 } = require("../Handlers/categories.handler");
+const { isAdmin } = require("../Middlewares/authorization");
 categoriesRouter.get("/", allCategory);
 
-categoriesRouter.post("/", createCategory);
+categoriesRouter.post("/", isAdmin, createCategory);
 
-categoriesRouter.patch("/:id", updateCategory);
+categoriesRouter.patch("/:id", isAdmin, updateCategory);
 
-categoriesRouter.delete("/:id", deleteCategory);
+categoriesRouter.delete("/:id", isAdmin, deleteCategory);
 
 module.exports = categoriesRouter;

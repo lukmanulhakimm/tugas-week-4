@@ -12,4 +12,15 @@ const getUserPassword = (email) => {
   return db.query(sql, VALUES);
 };
 
-module.exports = { createUser, getUserPassword };
+const getLogout = (token) => {
+  const sql = "select token from logoutToken where token=$1";
+  const values = [token];
+  return db.query(sql, values);
+};
+const insertLogout = (token) => {
+  const sql = "insert into logouttoken(token) values($1)";
+  const values = [token];
+  return db.query(sql, values);
+};
+
+module.exports = { createUser, getUserPassword, getLogout, insertLogout };

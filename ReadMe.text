@@ -1,0 +1,21 @@
+Coffeeshop
+Deskripsi Proyek: Proyek ini bertujuan untuk mengembangkan sebuah sistem yang akan digunakan oleh sebuah coffeeshop. Sistem ini akan membantu coffeeshop dalam mengelola semua aspek operasionalnya.
+Fitur Utama:
+1.	Manajemen Menu: Sistem akan memungkinkan coffeeshop untuk mengelola menu mereka, termasuk menambahkan, menghapus, atau mengedit item-menu seperti kopi, makanan ringan, dan lainnya.
+2.	Manajemen Inventaris: Sistem akan memantau stok  minuman kopi dan makanan. Ini akan memberikan notifikasi ketika stok rendah dan memungkinkan pengelolaan pesanan untuk mengisi ulang stok.
+3.	Pemesanan dan Penjualan: Sistem akan memungkinkan pelanggan untuk melakukan pemesanan dan pembayaran secara online. Ini akan memungkinkan pencatatan penjualan dan pelacakan pendapatan harian.
+4.	Manajemen Pelanggan: Sistem akan memiliki basis data pelanggan yang mencatat informasi pelanggan yang sering datang, preferensi mereka, dan riwayat pesanan mereka.
+5.	Laporan dan Analisis: Sistem akan menghasilkan laporan penjualan, serta analisis terkait kinerja bisnis, termasuk item-menu yang paling laku, tren pelanggan, dan lainnya.
+Teknologi yang Digunakan:
+•	Database Management System (DBMS) seperti PostgreSQL
+•	Bahasa pemrograman untuk pengembangan aplikasi terkait database, Node.js
+•	Framework pengembangan web (express js)
+Manfaat Proyek:
+•	Meningkatkan efisiensi operasional coffeeshop dengan mengotomatisasi manajemen inventaris, pemesanan, dan pelacakan penjualan.
+•	Memungkinkan pelayanan yang lebih baik kepada pelanggan dengan menyediakan pemesanan online dan histori pesanan.
+Target Pengguna:
+•	Pengelola Coffeeshop.
+•	Karyawan yang bertugas di coffeeshop.
+•	Pelanggan yang ingin memesan dan membayar online.
+
+
