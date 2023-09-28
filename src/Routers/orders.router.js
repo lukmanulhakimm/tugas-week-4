@@ -9,7 +9,7 @@ const {
 } = require("../Handlers/orders.handler");
 
 ordersRouter.get("/", allOrders);
-ordersRouter.post("/:id_user", isUser, createOrders);
-ordersRouter.patch("/:id", isUser, updateOrders);
-ordersRouter.delete("/:id", isUser, deleteOrders);
+ordersRouter.post("/:id_user", createOrders);
+ordersRouter.patch("/:id", updateOrders);
+ordersRouter.delete("/:id", deleteOrders);
 module.exports = ordersRouter;

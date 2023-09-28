@@ -49,7 +49,13 @@ const del = (id) => {
   const values = [id];
   return db.query(sql, values);
 };
-const search = (search_name, search_price, orderByProduct, limit, page) => {
+const search = (
+  search_name = "",
+  search_price = 9999999,
+  orderByProduct,
+  limit,
+  page
+) => {
   const sql =
     "select products.id,products.name_product,products.description,products.stock, products.price,products.method_product, products.created_at, categories.name_category,promos.name_promo,promos.discount_percentage from products join categories on products.id_category  = categories.id left join promos on products.id_promo = promos.id where name_product like '%" +
     search_name +
@@ -57,6 +63,7 @@ const search = (search_name, search_price, orderByProduct, limit, page) => {
     orderByProduct +
     ",price asc , created_at asc limit $2 offset $3 ";
   const values = [search_price, limit, page];
+  // console.log("sss", values);
   return db.query(sql, values);
 };
 

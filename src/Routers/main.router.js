@@ -18,6 +18,8 @@ const { create } = require("../Models/images.model");
 const { update } = require("../Models/images.model");
 const { readById } = require("../Models/images.model");
 
+const { sendMail } = require("../Helpers/sendMail");
+
 mainRouter.post("/upload", singleUpload("image"), async (req, res) => {
   // console.log(req.file);
   if (!req.file) return res.status(422).json({ msg: "file not valid" });
@@ -52,6 +54,30 @@ mainRouter.patch("/update", singleUpload("image"), async (req, res) => {
       msg: `image sudah berubah`,
     });
   } catch (error) {
+    res.status(500).json({
+      msg: "internal server error",
+    });
+  }
+});
+
+mainRouter.get("mail", async (req, res) => {
+  try {
+    const info = await sendMail({
+      // ngambil dari database
+      to: "cayan62604@bookspre.com",
+      subject: "Email activation",
+      // ngambil dari database
+      data: {
+        userName: "lukman",
+        activationLink: "http://www.fazztrack.com/",
+      },
+    });
+    res.status(200).json({
+      msg: "sukses",
+      Response: info.response,
+    });
+  } catch (error) {
+    console.log(error);
     res.status(500).json({
       msg: "internal server error",
     });
