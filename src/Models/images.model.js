@@ -2,7 +2,8 @@
 const db = require("../Configs/posgres");
 
 const read = () => {
-  const sql = "select * from images";
+  const sql =
+    "select image ,name_product, description,price,size,stock,name_category,name_promo from images join products on products.id = images.id_product left join categories  on categories.id =products.id_category left join promos on promos.id =products.id_promo;";
   return db.query(sql);
 };
 
