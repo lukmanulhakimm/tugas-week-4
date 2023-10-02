@@ -15,6 +15,7 @@ server.listen(8000, () => {
   console.log(" app running port 8000");
 });
 
+module.exports = server;
 // // connecting DB
 // const pg = require("pg");
 // const { Pool } = pg;
