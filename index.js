@@ -10,11 +10,12 @@ server.use(express.urlencoded({ extended: false }));
 
 const mainRouter = require("./src/Routers/main.router");
 
+server.use(mainRouter);
+// port
+
 server.use("/", (req, res) => {
   return res.json({ connection: "oke" });
 });
-server.use(mainRouter);
-// port
 server.listen(8000, () => {
   console.log(" app running port 8000");
 });
